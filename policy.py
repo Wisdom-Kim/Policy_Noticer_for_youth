@@ -83,14 +83,38 @@ class Policy():
     def get_img_url(self):
         return self.__img_url
 
-# 텍스트 전처리 함수
-def need_info(text):
-    return text.strip()
+# 특정 키워드를 포함하는 내용만 추려낸다. (텍스트 전처리 함수)
+def need_info(text, ""):
+    # 텍스트를 줄 단위로 분할한다.
+    lines = text.split('\n')
+
+    # 필터 함수를 정의하여 해당 키워드를 포함하는지 확인한다.
+    def filter_function(line):
+        return string in line
+    
+    # 필터 함수를 적용하여 추출한다.
+    filtered_lines = filter(filter_function, lines)
+    extracted_info = next(filtered_lines, None)
+
+    # 내용이 없는 경우 빈 문자열을 반환한다.
+    if extracted_info is None:
+        return ""
+
+    if string in extracted_info:
+        extracted_info = extracted_info.split(str)[1].strip()
+    else:
+        extracted_info = "특정 키워드가 아닌 경우..."
+    
+    return extracted_info
 
 def fetch_data(self):
     try:
         # 텍스트 분할을 통한 정보 수집
         row_text  = driver.find_element(By.CLASS_NAME, "editor-text").text
+
+        # 전처리 함수를 이용하여 텍스트 정제
+        row_text = need_info(row_text)
+
         print(row_text)
         if '신청 기간' in row_text:
            period = row_text.split('editor-text')[1].strip()
