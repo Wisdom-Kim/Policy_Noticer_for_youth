@@ -62,7 +62,9 @@ def crawling_init(driver,URL) -> None:
     #모집중
     driver.find_element(By.XPATH,'/html/body/div[3]/div/div[1]/div/div[2]/form/div/div[2]/div[4]/ul/li[5]/div/ul/li[2]').click()
     #검색버튼 클릭
-    driver.find_element(By.XPATH,'/html/body/div[3]/div/div[1]/div/div[2]/form/div/div[2]/div[3]/button').click()
+    search_btn = driver.find_element(By.XPATH,'/html/body/div[3]/div/div[1]/div/div[2]/form/div/div[2]/div[3]/button')
+
+    driver.execute_script("arguments[0].click();", search_btn)
     time.sleep(1)
 
 def get_last_page(driver):
@@ -100,9 +102,9 @@ def save_new_policy(driver,database) -> dict:
                 if(fid not in database):
                     #database에 db가 없다면 객체 생성 후 txt에 fid기입
                     policy = create_policy(feed)
-                    write_db('database.txt', policy.get_fid())
+                    write_db('database.txt', policy._fid)
                     
-                    policy_dict[policy.get_fid()]=policy
+                    policy_dict[policy._fid]=policy
                     
             except NoSuchElementException:
                 #상태 태그가 존재하지 않음
