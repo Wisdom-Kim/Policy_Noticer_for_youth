@@ -1,4 +1,4 @@
-class Feed():
+class Policy_feed():
     def __init__(self,title,category,thumbnail_url,fid):
         self.__title = title
         self.__category=category
@@ -13,3 +13,6 @@ class Feed():
     
     def get_thumbnail(self):
         return self.__thumbnail_url
+    
+    def get_fid(self):
+        return self.__fid
