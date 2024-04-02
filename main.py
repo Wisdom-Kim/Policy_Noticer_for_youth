@@ -1,8 +1,40 @@
-# 파이썬 미니 프로젝트 (지혜님과 함께)
+# 파이썬 미니 프로젝트 (with 지혜님)
+"""
+
+[miniproject]
+
+- 실습기간 : ~ 24.04.2~3(오전)(진행)
+- 최소조건
+	1. OOP
+		1-1*) 함수, 클래스, 상속* 		
+		1-2*) 실행 모듈(1개 : main.py)
+			
+	2. Skills
+		2-1*) fetchData : crawling/API
+		2-2*) file, exception, mail
+		2-3) https://pyscript.net (옵션 -> 추후 적용해보기)
+
+	3. Git
+		3-1*) md
+		3-2) issue, project(kanban)
+
+- 실습순서
+  1. 주제선정
+crawling/OpenAPI : 사용할 수 있는 데이터 유무
+  2. 설계
+terminal 입력/출력
+  3. 구현
+    
+    
+"""
 
 """ < 기능명세 >
     1-1) 유저에게 본인 정보를 입력 받는다.
     1-2) 현재 모집 현황이 ‘모집중’ ,’모집예정’,’상시’인 것을 대상으로 정보들을 검색한다.
+          # 모집중    # <span class = "state bg-blue"> 모집중 </span>
+          # 모집예정  # <span class = "state bg-purple"> 모집예정 </span>
+          # 상시     #  <span class = "state bg-gray-e5"> 상시 </span>
+    
     1-3) 검색 후 나오는 사이트들의 피드를 수집한다. 
     1-4) 피드 내 구조에 따라 메세지 객체를 생성한다.
     1-5) 메세지 객체를 생성 후 리스트에 담아둔다.
@@ -38,35 +70,4 @@ from policy import Policy
 def main():
     pass
 
-    
-
-        
-    
-
-"""
-
-[miniproject]
-- 실습기간 : ~ 24.04.2~3(오전)(진행)
-- 최소조건
-	1. OOP
-		1-1*) 함수, 클래스, 상속* 		
-		1-2*) 실행 모듈(1개 : main.py)
-			
-	2. Skills
-		2-1*) fetchData : crawling/API
-		2-2*) file, exception, mail
-		2-3) https://pyscript.net (옵션 -> 추후 적용해보기)
-
-	3. Git
-		3-1*) md
-		3-2) issue, project(kanban)
-
-- 실습순서
-  1. 주제선정
-crawling/OpenAPI : 사용할 수 있는 데이터 유무
-  2. 설계
-terminal 입력/출력
-  3. 구현
-    
-    
-"""
+  
