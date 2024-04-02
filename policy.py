@@ -33,61 +33,58 @@ class Policy_feed():
     def get_fid(self):
         return self.__fid
 
-
 # 자식
-class Policy(Policy_feed):
+class Policy():
     def __init__ (self, title, category, thumbnail_url, fid):
-        super().__init__(title, category, thumbnail_url, fid)
+        #super().__init__(title, category, thumbnail_url, fid)
         #신청기간
-        self.applc_period = None
+        self.__applc_period = None
         #진행일정
-        self.schedule = None
+        self.__schedule = None
         #담당기관
-        self.agency = None
+        self.__agency = None
         #참여인원
-        self.join_people = None
+        self.__join_people = None
         #신청대상
-        self.subject_applc = None
+        self.__subject_applc = None
         #지원내용
-        self.sup_contents = None
+        self.__sup_contents = None
         #참여비
-        self.entry_fee = None
+        self.__entry_fee = None
         #신청방법
-        self.applc_method = None
+        self.__applc_method = None
         #상세 이미지 주소 리스트
-        self.img_url = []
-            
-    # 수집한 데이터를 가공하여 반환
-    def process_data(self, data):
-        processed_data = []
-        for policy in data:
-            processed_data.append
-            ({
-                "title": policy.get_title(),
-                "category": policy.get_category(),
-                "thumbnail_url": policy.get_thumbnail(),
-                "fid": policy.get_fid(),
-                "applc_period": policy.applc_period,
-                "schedule": policy.schedule,
-                "agency": policy.agency,
-                "join_people": policy.join_people,
-                "subject_applc": policy.subject_applc,
-                "sup_contents": policy.sup_contents,
-                "entry_fee": policy.entry_fee,
-                "applc_method": policy.applc_method,
-                "img_url": policy.img_url
-            })
-        return processed_data
-    
-    # 예외 처리
-    def handle_exception(self, e):
-        print(f"예외 발생: {e}")
+        self.__img_url = []
 
-    # 파일 저장 코드 작성??
-    def save_to_file(self, data, filename):
-        pass
+    """ get을 사용하여 가독성 정리하기..?? """
+    # Getter메서드
+    def get_applc_period(self):
+        return self.__applc_period
     
-    
+    def get_schedule(self):
+        return self.__schedule
+
+    def get_agency(self):
+        return self.__agency
+
+    def get_join_people(self):
+        return self.__join_people
+
+    def get_subject_applc(self):
+        return self.__subject_applc
+
+    def get_sup_contents(self):
+        return self.__sup_contents
+
+    def get_entry_fee(self):
+        return self.__entry_fee
+
+    def get_applc_method(self):
+        return self.__applc_method
+
+    def get_img_url(self):
+        return self.__img_url
+
 def fetch_data(self):
     try:
   
@@ -102,19 +99,19 @@ def fetch_data(self):
                 if '신청 기간' in row_text:
                     policy.applc_period = row_text.split('editor-text')[1].strip()
                 elif '진행일정' in row_text:
-                    policy.schedule = row_text.split('진행')[1].strip()
+                    policy.schedule = row_text.split('editor-text')[1].strip()
                 elif '담당기관' in row_text:
-                    policy.agency = row_text.split('담당기관')[1].strip()
+                    policy.agency = row_text.split('editor-text')[1].strip()
                 elif '참여인원' in row_text:
-                    policy.join_people = row_text.split('참여인원')[1].strip()
+                    policy.join_people = row_text.split('editor-text')[1].strip()
                 elif '신청대상' in row_text:
-                    policy.subject_applc = row_text.split('신청대상')[1].strip()
+                    policy.subject_applc = row_text.split('editor-text')[1].strip()
                 elif '지원내용' in row_text:
-                    policy.sup_contents = row_text.split('지원내용')[1].strip()
+                    policy.sup_contents = row_text.split('editor-text')[1].strip()
                 elif '참여비' in row_text:
-                    policy.entry_fee = row_text.split('참여비')[1].strip()
+                    policy.entry_fee = row_text.split('editor-text')[1].strip()
                 elif '신청방법' in row_text:
-                    policy.applc_method = row_text.split('신청방법')[1].strip()
+                    policy.applc_method = row_text.split('editor-text')[1].strip()
                 
                 # 상세 이미지 주소
                 image_elements = driver.find_elements(By.CSS_SELECTOR, ".policy_detail img")
@@ -125,3 +122,4 @@ def fetch_data(self):
     
     finally:
         driver.quit()
+
