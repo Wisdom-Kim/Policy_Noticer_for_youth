@@ -19,9 +19,9 @@ def remove_bracket(component) ->str:
     last_index=component.find(')')
     return component[first_index+1:last_index].strip('\'')
 
-def get_page_component(component) -> str:
-    # 크롤링한 피드 컴포넌트의 속성 중 마지막 페이지가 속한 부분을 반환
-    return component.find_element(By.XPATH,'/html/body/div[3]/div/div[1]/div/div[2]/form/div/div[4]/div[1]/div[2]/a[9]').get_attribute("onclick")
+# def get_page_component(component) -> str:
+#     # 크롤링한 피드 컴포넌트의 속성 중 마지막 페이지가 속한 부분을 반환
+#     return component.find_element(By.XPATH,'/html/body/div[3]/div/div[1]/div/div[2]/form/div/div[4]/div[1]/div[2]/a[9]').get_attribute("onclick")
 
 def get_fid_component(item) -> str:
     # 크롤링한 피드 컴포넌트의 속성 중 피드의 id가 속한 부분을 반환
@@ -39,10 +39,10 @@ def create_policy(feed) -> object:
         fid = remove_bracket(get_fid_component(feed))
     return Policy_feed(title,category,src,fid)
 
-def write_db(file,id) -> None:
+def write_db(file_name,id) -> None:
     #database.txt에 파일 내용저장
     #딕셔너리에 존재하지 않는 id만 db에 추가하므로, write_db 이후에 save_policies를 호출할 것
-    with open(file,'a') as f: f.write(f'{id}\n')
+    with open(file_name,'a') as f: f.write(f'{id}\n')
 
 ##################################################################
 
@@ -66,45 +66,48 @@ def crawling_init(driver,URL) -> None:
     time.sleep(1)
 
 def get_last_page(driver):
-    last_index = int(remove_bracket(get_page_component(driver)))
+    last_index = driver.find_element(By.XPATH,'/html/body/div[3]/div/div[1]/div/div[2]/form/div/div[4]/div[1]/div[2]/a[9]').get_attribute("onclick")
+    last_index = int(remove_bracket(last_index))
     return last_index
     
     #last index만큼 '>'를 누르면서 DB에 저장
     
-def next_page(driver, cur_page):
+def next_page(driver, cur_page) -> int:
     #현재 페이지에서 다음페이지로 이동
     try:
-        next_btn = driver.find_element(By.CSS_SELECTOR,f"a[onclick^={cur_page+1}]")
+        function_name = 'fn_egov_link_page'
+        xpath = f"//a[contains(@onclick, '{function_name}({cur_page+1})')]"
+        next_btn = driver.find_element(By.XPATH, xpath)
+        
         driver.execute_script("arguments[0].click();", next_btn)
-    except Exception:
-        print("마지막이네!")
+        return int(cur_page)+1
+    except Exception as e:
+        print(e)
 
 def save_new_policy(driver,database) -> dict:
 
     policy_dict ={} # id : 객체
-
-    while(True):
+    cur_idx =1
+    
+    last_index = get_last_page(driver)
+    while(last_index > cur_idx):
         #마지막 인덱스로 갈 때까지 저장하면서 페이지 넘기기
-        next_btn = driver.find_element(By.NAME,'a.arr1.next')
-        last_index = int(remove_bracket(get_page_component(driver)))
-        feeds = driver.find_elements(By.CLASS_NAME,"feed-item")
         
+        feeds = driver.find_elements(By.CLASS_NAME,"feed-item")
         for feed in feeds:
             try:
                 fid = remove_bracket(get_fid_component(feed))
                 if(fid not in database):
-                    #객체 생성
+                    #database에 db가 없다면 객체 생성 후 txt에 fid기입
                     policy = create_policy(feed)
-                    #database.txt에 fid저장
-                    write_db(database, policy.get_fid())
+                    write_db('database.txt', policy.get_fid())
+                    
                     policy_dict[policy.get_fid()]=policy
+                    
             except NoSuchElementException:
                 #상태 태그가 존재하지 않음
-                print("태그 정보 없음")
+                print("상태 정보 없음")
                 
-        time.sleep(1)
-        #다음 버튼 클릭
-        if idx==last_index:
-           break
+        cur_idx = next_page(driver,cur_idx)
 
     return policy_dict
