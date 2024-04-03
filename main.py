@@ -70,9 +70,80 @@ terminal 입력/출력
     6. 상세 이미지 주소 리스트
 """
 
-from policy import Policy
+# from policy import Policy
+
+# def main():
+#     pass
+  
+  
+from selenium.webdriver.common.by import By
+from selenium.webdriver.chrome.service import Service
+from webdriver_manager.chrome import ChromeDriverManager
+from selenium import webdriver
+
+class Policy:
+    def __init__ (self, applc_period, schedule, agency, join_people, subject_applc, sup_contents, entry_fee, applc_method, img_url):
+        self.applc_period = applc_period
+        self.schedule = schedule
+        self.agency = agency
+        self.join_people = join_people
+        self.subject_applc = subject_applc
+        self.sup_contents = sup_contents
+        self.entry_fee = entry_fee
+        self.applc_method = applc_method
+        self.img_url = img_url
+
+def fetch_data(driver):
+    try:
+        row_text = driver.find_element(By.CLASS_NAME, "editor-text").text
+
+        applc_period = need_info('신청기간', row_text)
+        schedule = need_info('진행일정', row_text)
+        agency = need_info('담당기관', row_text)
+        join_people = need_info('참여인원', row_text)
+        subject_applc = need_info('신청대상', row_text)
+        sup_contents = need_info('지원내용', row_text)
+        entry_fee = need_info('참여비', row_text)
+        applc_method = need_info('신청방법', row_text)
+
+        image_elements = driver.find_elements(By.CSS_SELECTOR, ".policy_detail img")
+        img_url = [image.get_attribute("src") for image in image_elements]
+
+        return Policy(applc_period, schedule, agency, join_people, subject_applc, sup_contents, entry_fee, applc_method, img_url)
+            
+    except Exception as e:
+        print(e)
+        return None
+    
+    finally:
+        driver.quit()
+
+def need_info(keyword, text):
+    lines = text.split('\n')
+    
+    for line in lines:
+        if keyword in line:
+            return line.split(':', 1)[1].strip()
+    
+    return ""
 
 def main():
-    pass
-
-  
+    service = Service(ChromeDriverManager().install())
+    driver = webdriver.Chrome(service=service)
+    driver.get("https://youth.seoul.go.kr/infoData/sprtInfo/view.do?sprtInfoId=51538&key=2309130006&pageIndex=1&orderBy=regYmd+desc&recordCountPerPage=8&sc_ctgry=&sw=&viewType=on&sc_aplyPrdEndYmdUseYn=&cntrLa=37.566761128870546&cntrLo=126.97862963872868&neLat=37.566761128870546&neLng=126.97862963872868&swLat=37.566761128870546&swLng=126.97862963872868&mapLvl=6&sarea=")
+    
+    policy_data = fetch_data(driver)
+    
+    if policy_data:
+        print("신청기간:", policy_data.applc_period)
+        print("진행일정:", policy_data.schedule)
+        print("담당기관:", policy_data.agency)
+        print("참여인원:", policy_data.join_people)
+        print("신청대상:", policy_data.subject_applc)
+        print("지원내용:", policy_data.sup_contents)
+        print("참여비:", policy_data.entry_fee)
+        print("신청방법:", policy_data.applc_method)
+        print("이미지 주소:", policy_data.img_url)
+    
+if __name__ == "__main__":
+    main()

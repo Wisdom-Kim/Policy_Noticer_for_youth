@@ -6,6 +6,9 @@ from selenium.webdriver.chrome.service import Service
 
 from webdriver_manager.chrome import ChromeDriverManager
 
+# 웹 드라이버 설정 및 웹 페이지 접속
+service = Service(ChromeDriverManager().install())
+
 driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
 
 driver.get("https://youth.seoul.go.kr/infoData/sprtInfo/view.do?sprtInfoId=51538&key=2309130006&pageIndex=1&orderBy=regYmd+desc&recordCountPerPage=8&sc_ctgry=&sw=&viewType=on&sc_aplyPrdEndYmdUseYn=&cntrLa=37.566761128870546&cntrLo=126.97862963872868&neLat=37.566761128870546&neLng=126.97862963872868&swLat=37.566761128870546&swLng=126.97862963872868&mapLvl=6&sarea=")
@@ -32,7 +35,7 @@ class Policy_feed():
 
 # 자식
 class Policy():
-    def __init__ (self, applc_period, schedule, agency, join_people,subject_applc,sup_contents, entry_fee, applc_method,img_url):
+    def __init__ (self, applc_period, schedule, agency, join_people,subject_applc,sup_contents, entry_fee, applc_method, img_url):
         #super().__init__(title, category, thumbnail_url, fid)
 
         #신청기간
@@ -83,42 +86,53 @@ class Policy():
     def get_img_url(self):
         return self.__img_url
 
-# 특정 키워드를 포함하는 내용만 추려낸다. (텍스트 전처리 함수)
-def need_info(text, ""):
-    # 텍스트를 줄 단위로 분할한다.
-    lines = text.split('\n')
-
-    # 필터 함수를 정의하여 해당 키워드를 포함하는지 확인한다.
-    def filter_function(line):
-        return string in line
+"""
+'text_list' 에서 키워드를 찾고, 해당 키워드가 발견되면 시작 지점 'start_idx'를 설정한다.
+빈 줄을 만날 때까지 반복하다가 빈 줄을 만나면 종료 지점 'end_idx'를 설정하고 반복을 멈춘다.
+시작 지점과 종료 지점 사이의 텍스트를 슬라이싱하여 반환한다? 시작 지점이 없으면 빈 리스트를 반환
+"""
+def need_info(keyword, text_list):
+#한줄씪 키워드를 탐색 후, 원하는 정보를 반환하는 함수   
+    start_idx = None
+    end_idx = None
     
-    # 필터 함수를 적용하여 추출한다.
-    filtered_lines = filter(filter_function, lines)
-    extracted_info = next(filtered_lines, None)
-
-    # 내용이 없는 경우 빈 문자열을 반환한다.
-    if extracted_info is None:
-        return ""
-
-    if string in extracted_info:
-        extracted_info = extracted_info.split(str)[1].strip()
-    else:
-        extracted_info = "특정 키워드가 아닌 경우..."
+    for index, line in enumerate(text_list):
+        
+        if keyword in line:
+            # start_idx = index + 1
+            return text_list[index+1]
+            
+        # elif start_idx == '':
+        #     end_idx = index
+            
+        #     break
+    if start_idx == None:
+        #찾지 못했으면
+        return []
+    # else:
+    #     #찾았으면
+    #     if(end_idx != None):
+    #         #끝 줄을 찾았다면
+    #         return text_list[start_idx:end_idx]
+    #     else:
+    #         return text_list[start_idx:]
     
-    return extracted_info
+    # if start_idx is not None and end_idx is not None:
+    #     return text_list[start_idx:end_idx]
+    
+    # elif start_idx is not None:
+    #     return text_list[start_idx: ]
+
 
 def fetch_data(self):
     try:
         # 텍스트 분할을 통한 정보 수집
-        row_text  = driver.find_element(By.CLASS_NAME, "editor-text").text
+        row_text  = driver.find_element(By.CLASS_NAME, "editor-text").text.split('\n')
 
         # 전처리 함수를 이용하여 텍스트 정제
-        row_text = need_info(row_text)
-
-        print(row_text)
-        if '신청 기간' in row_text:
-           period = row_text.split('editor-text')[1].strip()
-           print(period)
+        if '신청기간' in row_text:
+            applc_period = row_text.split('editor-text')[1].strip()
+            print(applc_period)
         if '진행일정' in row_text:
             schedule = row_text.split('editor-text')[1].strip()
             print(schedule)
@@ -146,28 +160,79 @@ def fetch_data(self):
             img_url = [image.get_attribute("src") for image in image_elements]
             
             # Policy 인스턴스 생성 및 반환
-            policy_instance = Policy(period, schedule, agency, join_people, subject_applc, sup_contents, entry_fee, applc_method, img_url)
+            policy_instance = Policy(applc_period, schedule, agency, join_people, subject_applc, sup_contents, entry_fee, applc_method, img_url)
             
             return policy_instance
             
     except Exception as e:
         print(e)
-        #policy_instance.handle_exception(e)
     
     finally:
         driver.quit()
 
-fetch_data(driver)
+class Need_info:
+    def __init__(self, period, schedule, agency, join_people, subject_applc, sup_contents, entry_fee, applc_method, img_url):
+        self.period = period
+        self.schedule = schedule
+        self.agency = agency
+        self.join_people = join_people
+        self.subject_applc = subject_applc
+        self.sup_contents = sup_contents
+        self.entry_fee = entry_fee
+        self.applc_method = applc_method
+        self.img_url = img_url
 
-# # Selenium 설정
-# service = Service(ChromeDriverManager().install())
-# driver = webdriver.Chrome(service=service)
+def split_text(text):
+    #text_list 반환
+    return text.split('\n')
 
-# Policy 객체 생성 및 데이터 수집
-# policy_instance = Policy("Sample Title", "Sample Category", "Sample Thumbnail URL", "Sample FID")
 
-# 데이터 수집 및 출력
+# 텍스트 데이터
+text_data = driver.find_element(By.CLASS_NAME, "editor-text").text
 
-# 수집한 데이터에 접근
-#print(policy_instance.get_title())
-#print(policy_instance.get_applc_period())
+print("=================================================")
+
+#keywords = ['신청기간', '진행일정', '담당기관', '참여인원', '신청대상', '지원내용', '참여비', '신청방법']
+keywords = ['기간']
+
+# 텍스트를 한 줄씩 쪼개서 리스트로 생성
+text_lines = split_text(text_data)
+
+# 정보 추출
+info_list = {}
+
+for keyword in keywords:
+    info = need_info(keyword, text_lines)
+    if info:
+    #info가 빈 리스트가 아니라면 아래 명령 실행
+    #내용을 찾은 경우
+        info_list[keyword] = ' '.join(info)
+print(info_list)
+
+# 객체 생성
+application_info = Need_info(
+    
+    period = info_list.get('신청기간', ''),
+    schedule = info_list.get('진행일정', ''),
+    agency = info_list.get('담당기관', ''),
+    join_people = info_list.get('참여인원', ''),
+    subject_applc = info_list.get('신청대상', ''),
+    sup_contents = info_list.get('지원내용', ''),
+    entry_fee = info_list.get('참여비', ''),
+    applc_method = info_list.get('신청방법', ''),
+    img_url = info_list.get('이미지', ''),
+)
+
+# 정보 전달
+policy = Policy(
+    application_info.period,
+    application_info.schedule,
+    application_info.agency,
+    application_info.join_people,
+    application_info.subject_applc,
+    application_info.sup_contents,
+    application_info.entry_fee,
+    application_info.applc_method,
+    application_info.img_url,
+    )
+print(policy.get_applc_period())
