@@ -46,14 +46,29 @@ def write_db(file_name,id) -> None:
 
 ##################################################################
 
-def filter_init(**kwargs) -> None:
+def filter_init(driver, custom_filter) -> None:
     #카테고리, 대상 기반 필터링
-    pass
+    #
+    target_btn = driver.find_element(By.XPATH,"/html/body/div[3]/div/div[1]/div/div[2]/form/div/div[2]/div[4]/ul/li[3]/a-list")
+    driver.execute_script("arguments[0].click();", target_btn)
+    # if custom_filter.cate!=[]:
+    #     #선택 요소가 있다면
+    #     for idx in custom_filter.cate:
+    #         xpath = f'/html/body/div[3]/div/div[1]/div/div[2]/form/div/div[2]/div[2]/ul[1]/li[{idx}]/a'
+        
+    if custom_filter.target!=[]:
+        for idx in custom_filter.target:
+            xpath = f'/html/body/div[3]/div/div[1]/div/div[2]/form/div/div[2]/div[2]/ul[1]/li[{idx}]/a'
+            target_btn = driver.find_element(By.XPATH,xpath)
+            driver.execute_script("arguments[0].click();", target_btn)
+
     
 #TODO filter_init, crawling_init 완성
-def crawling_init(driver,URL) -> None:
+def crawling_init(driver,URL,custom_filter) -> None:
+    #filter 객체를 받아 filter init 실행 후, 조건에 맞도록 크롤링할 것
+    
     driver.get(URL)
-    #filter_init()
+    filter_init(custom_filter)
     #필터별로 선택
     
     #모집 중 필터
@@ -113,3 +128,4 @@ def save_new_policy(driver,database) -> dict:
         cur_idx = next_page(driver,cur_idx)
 
     return policy_dict
+

@@ -36,3 +36,5 @@ class Policy_feed():
     @_fid.setter
     def _fid(self, value):
         self.__fid = value
+        
+    
