@@ -52,17 +52,19 @@ class Crawling_Manager:
 
     def filter_init(self, custom_filter) -> None:
         #카테고리, 대상 기반 필터링
-        target_btn = self.driver.find_element(By.XPATH,"/html/body/div[3]/div/div[1]/div/div[2]/form/div/div[2]/div[4]/ul/li[3]/a")
+        self.driver.find_element(By.XPATH,"/html/body/div[3]/div/div[1]/div/div[2]/form/div/div[2]/div[4]/ul/li[3]/a").click()
+        time.sleep(1)
         self.driver.execute_script("arguments[0].click();", target_btn)
-        # if custom_filter.cate!=[]:
-        #     #선택 요소가 있다면
-        #     for idx in custom_filter.cate:
-        #         xpath = f'/html/body/div[3]/div/div[1]/div/div[2]/form/div/div[2]/div[2]/ul[1]/li[{idx}]/a'
-            
+        if custom_filter.cate!=[]:
+            #선택 요소가 있다면
+            for idx in custom_filter.cate:
+                self.driver.find_element(By.XPATH,f'/html/body/div[3]/div/div[1]/div/div[2]/form/div/div[2]/div[2]/ul[1]/li[{idx}]/a').click()
+                time.sleep(1)    
+                
         if custom_filter._target!=[]:
             for idx in custom_filter._target:
-                xpath = f'/html/body/div[3]/div/div[1]/div/div[2]/form/div/div[2]/div[2]/ul[1]/li[{idx}]/a'
-                target_btn = self.driver.find_element(By.XPATH,xpath)
+                self.driver.find_element(By.XPATH,f'/html/body/div[3]/div/div[1]/div/div[2]/form/div/div[2]/div[2]/ul[1]/li[{idx}]/a').click()
+                time.sleep(1) 
                 self.driver.execute_script("arguments[0].click();", target_btn)
 
         

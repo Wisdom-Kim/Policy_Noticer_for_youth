@@ -2,7 +2,6 @@ from tkinter import *
 from tkinter import simpledialog
 import tkinter as tk
 from custom_filter import Filter
-import time
 
 class UI:
     def __init__(self):

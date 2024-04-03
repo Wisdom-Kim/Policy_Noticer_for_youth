@@ -22,8 +22,12 @@ class UI:
     def input_target(self):
         #인덱스이기 때문에 -1
         try:
+            target_list=[]
             target = int(input("해당하는 번호를 알려주세요! >>> "))-1
-            return target
-        except Exception:
+            target_list.append(str(target))
+            #TODO : 다중선택
+            self.my_filter._target=target_list
+        except Exception as e:
+            print(e)
             print("1부터 8까지 번호 하나만 입력해주세요!")
             
