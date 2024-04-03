@@ -11,10 +11,10 @@ service = Service(ChromeDriverManager().install())
 
 driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
 
-driver.get("https://youth.seoul.go.kr/infoData/sprtInfo/view.do?sprtInfoId=51538&key=2309130006&pageIndex=1&orderBy=regYmd+desc&recordCountPerPage=8&sc_ctgry=&sw=&viewType=on&sc_aplyPrdEndYmdUseYn=&cntrLa=37.566761128870546&cntrLo=126.97862963872868&neLat=37.566761128870546&neLng=126.97862963872868&swLat=37.566761128870546&swLng=126.97862963872868&mapLvl=6&sarea=")
+driver.get("https://youth.seoul.go.kr/infoData/sprtInfo/view.do?sprtInfoId=51421&key=2309130006&pageIndex=1&orderBy=regYmd+desc&recordCountPerPage=8&sc_ctgry=&sw=&viewType=on&sc_aplyPrdEndYmdUseYn=&cntrLa=37.566761128870546&cntrLo=126.97862963872868&neLat=37.566761128870546&neLng=126.97862963872868&swLat=37.566761128870546&swLng=126.97862963872868&mapLvl=6&sarea=")
 
 # Policy 클래스는 데이터를 크롤링하여 정제 및 가공하는 역할
-class Policy_feed():
+class Policy_feed:
     def __init__(self, title, category, thumbnail_url, fid):
         self.__title = title
         self.__category=category
@@ -34,7 +34,7 @@ class Policy_feed():
         return self.__fid
 
 # 자식
-class Policy():
+class Policy:
     def __init__ (self, applc_period, schedule, agency, join_people,subject_applc,sup_contents, entry_fee, applc_method, img_url):
         #super().__init__(title, category, thumbnail_url, fid)
 
@@ -86,11 +86,8 @@ class Policy():
     def get_img_url(self):
         return self.__img_url
 
-"""
-'text_list' 에서 키워드를 찾고, 해당 키워드가 발견되면 시작 지점 'start_idx'를 설정한다.
-빈 줄을 만날 때까지 반복하다가 빈 줄을 만나면 종료 지점 'end_idx'를 설정하고 반복을 멈춘다.
-시작 지점과 종료 지점 사이의 텍스트를 슬라이싱하여 반환한다? 시작 지점이 없으면 빈 리스트를 반환
-"""
+
+
 def need_info(keyword, text_list):
 #한줄씪 키워드를 탐색 후, 원하는 정보를 반환하는 함수   
     start_idx = None
@@ -171,16 +168,29 @@ def fetch_data(self):
         driver.quit()
 
 class Need_info:
-    def __init__(self, period, schedule, agency, join_people, subject_applc, sup_contents, entry_fee, applc_method, img_url):
-        self.period = period
-        self.schedule = schedule
-        self.agency = agency
-        self.join_people = join_people
-        self.subject_applc = subject_applc
-        self.sup_contents = sup_contents
-        self.entry_fee = entry_fee
-        self.applc_method = applc_method
-        self.img_url = img_url
+    def __init__(self, info_list):
+        self.period = info_list.get('기간', ''),
+        self.schedule = info_list.get('일정', ''),
+        self.agency = info_list.get('기관', ''),
+        self.join_people = info_list.get('인원', ''),
+        self.subject_applc = info_list.get('대상', ''),
+        self.sup_contents = info_list.get('내용', ''),
+        self.entry_fee = info_list.get('참여비', ''),
+        self.applc_method = info_list.get('방법', ''),
+        self.img_url = info_list.get('이미지', '')
+        
+        # self.period = period
+        # self.schedule = schedule
+        # self.agency = agency
+        # self.join_people = join_people
+        # self.subject_applc = subject_applc
+        # self.sup_contents = sup_contents
+        # self.entry_fee = entry_fee
+        # self.applc_method = applc_method
+        # self.img_url = img_url
+        
+    def __repr__(self):
+        return f'기간 : {self.period}, 일정 : {self.schedule}'
 
 def split_text(text):
     #text_list 반환
@@ -193,11 +203,11 @@ text_data = driver.find_element(By.CLASS_NAME, "editor-text").text
 print("=================================================")
 
 #keywords = ['신청기간', '진행일정', '담당기관', '참여인원', '신청대상', '지원내용', '참여비', '신청방법']
-keywords = ['기간']
+keywords = ['기간', '일정', '기관', '인원', '대상', '내용' '참여비', '방법']
 
 # 텍스트를 한 줄씩 쪼개서 리스트로 생성
 text_lines = split_text(text_data)
-
+# print(text_lines)
 # 정보 추출
 info_list = {}
 
@@ -206,22 +216,14 @@ for keyword in keywords:
     if info:
     #info가 빈 리스트가 아니라면 아래 명령 실행
     #내용을 찾은 경우
-        info_list[keyword] = ' '.join(info)
-print(info_list)
+        info_list[keyword] = info
+# print(info_list)
+
+# print(Need_info(info_list))
 
 # 객체 생성
-application_info = Need_info(
-    
-    period = info_list.get('신청기간', ''),
-    schedule = info_list.get('진행일정', ''),
-    agency = info_list.get('담당기관', ''),
-    join_people = info_list.get('참여인원', ''),
-    subject_applc = info_list.get('신청대상', ''),
-    sup_contents = info_list.get('지원내용', ''),
-    entry_fee = info_list.get('참여비', ''),
-    applc_method = info_list.get('신청방법', ''),
-    img_url = info_list.get('이미지', ''),
-)
+application_info = Need_info(info_list)
+print(application_info)
 
 # 정보 전달
 policy = Policy(
@@ -235,4 +237,4 @@ policy = Policy(
     application_info.applc_method,
     application_info.img_url,
     )
-print(policy.get_applc_period())
+# print(policy)
