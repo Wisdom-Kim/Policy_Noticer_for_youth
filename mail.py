@@ -64,24 +64,12 @@ def dict_to_content(dictionary) ->str:
         content += f"카테고리 : {new_policy._category}\n"
     return content        
         
-def write_msg(server,policy_dict)-> object: # content 반환
+def write_msg(server,policy_dict,email)-> object: # content 반환
     text= dict_to_content(policy_dict)
     msg =  MIMEMultipart('alternative')
     msg['Subject']='짜잔!🥰 요청하신 정책 정보입니다!'
     msg.attach(MIMEText(text, 'plain', _charset='UTF-8'))
     msg['From'] = server._SMTP_USER
-    msg['To'] = input('메일을 받을 이메일 주소를 입력해주세요!: ')
+    msg['To'] = email
     return msg
-    
-##############
-    
-driver = webdriver.Chrome()
-URL = 'https://youth.seoul.go.kr/infoData/sprtInfo/list.do?key=2309130006'
 
-database = pretreatment_db('database.txt')
-crawling_init(driver,URL)
-policy_dict = save_new_policy(driver,database)#database에 없는 조건에 맞는 정책들이 담긴 딕셔너리
-
-server = Server()
-msg = write_msg(server,policy_dict)
-server.send_email(msg)

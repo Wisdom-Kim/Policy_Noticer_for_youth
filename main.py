@@ -1,10 +1,19 @@
-from selenium import webdriver
+from interface import *
+from mail import *
 from crawling_manager import *
+from custom_filter import *
 
-driver = webdriver.Chrome()
-URL = 'https://youth.seoul.go.kr/infoData/sprtInfo/list.do?key=2309130006'
+cm = Crawling_Manager()
+#app = UI(cm)
+custom_filter = Filter()
+#crawling_filter = app.apply_filter()
+cm.crawling_init(custom_filter)
+database = cm.pretreatment_db('database.txt')
+policy_dict = cm.save_new_policy(database)
+#email = app.input_email()
 
-database = pretreatment_db('database.txt')
-crawling_init(driver,URL)
-policy_dict = save_new_policy(driver,database)
-time.sleep(100)
+#메일링을 위한 서버 구동
+# server = Server()
+# msg = write_msg(server,policy_dict,email)
+# server.send_email(msg)
+
