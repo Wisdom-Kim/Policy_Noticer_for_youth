@@ -2,16 +2,16 @@ from tkinter import *
 from tkinter import simpledialog
 import tkinter as tk
 from custom_filter import Filter
+import time
 
 class UI:
-    def __init__(self,cm):
+    def __init__(self):
         self.root = tk.Tk()
         self.root.title("정책 필터 설정")
         self.category_vars = []
         self.target_vars = []
         self.my_filter=Filter()
-        self.cm= cm  #크롤링 매니저
-        self.create_widgets()
+        
         
     def close_widgets(self):
         self.root.destroy()
@@ -43,15 +43,21 @@ class UI:
         # self.email_entry = tk.Entry(self.root, width=40)
         # self.email_entry.grid(row=9, column=1, padx=10, pady=5, sticky="w")  # 이메일 입력 상자는 세 번째 행에 배치
         
-        tk.Button(self.root, text="확인", command=self.apply_filter()).grid(row=10, column=4, padx=10, pady=5, sticky="e")
+        tk.Button(self.root, text="확인", command= lambda : self.apply_filter()).grid(row=10, column=4, padx=10, pady=5, sticky="e")
         self.root.mainloop()
         
-    def apply_filter(self) :
+    def apply_filter(self) ->object:
+        #filter 객체 반환
+        
         #선택한 요소의 인덱스를 필터 객체에 저장
+        #print("야야야야야ㅑ야ㅑ~!~!~!")
         self.my_filter.cate = [idx for idx, var in enumerate(self.category_vars) if var.get()]
         self.my_filter.target = [idx for idx, var in enumerate(self.target_vars) if var.get()]
         #self.root.destroy()
-        self.cm.crawling_init(self.my_filter)
+        # self.cm.crawling_init(self.my_filter)
+        #self.root.destroy()
+        
+        return self.my_filter
         
     def input_email(self) -> str:
         return simpledialog.askstring('이메일',"메일 주소를 입력하면 관련 정책을 보내드려요!")
