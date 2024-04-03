@@ -5,6 +5,7 @@ import os
 from dotenv import load_dotenv
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
+
 import smtplib
 
 load_dotenv()
@@ -65,15 +66,13 @@ def dict_to_content(dictionary) ->str:
         
 def write_msg(server,policy_dict)-> object: # content 반환
     text= dict_to_content(policy_dict)
-    msg =  MIMEMultipart('mixed')
+    msg =  MIMEMultipart('alternative')
     msg['Subject']='짜잔!🥰 요청하신 정책 정보입니다!'
     msg.attach(MIMEText(text, 'plain', _charset='UTF-8'))
     msg['From'] = server._SMTP_USER
     msg['To'] = input('메일을 받을 이메일 주소를 입력해주세요!: ')
     return msg
     
-
-
 ##############
     
 driver = webdriver.Chrome()
