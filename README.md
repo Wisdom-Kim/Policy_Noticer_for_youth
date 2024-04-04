@@ -1,7 +1,5 @@
-ㅇ# SIAT_python_crawling
-
 # *SIAT 청년정책 알라미 (SIAT_python_crawling)*
-- 개발기간 : 2024.04.01 ~ 04.03
+- 전체 개발기간 : 2024.04.01 ~ 04.03
 - 팀원 : 김지혜 (Wisdom-Kim), 서형종 (aeeoou)
 <br>
 <br>
@@ -17,7 +15,7 @@
 4. [개선 및 추후 계획](#개선-및-추후-계획)
 
 5. [후기](#후기)
-<br>ㅅ
+<br>
 <br>
 
 ## *프로젝트 소개*
@@ -50,6 +48,10 @@
 - 요구 사항 : VSCode 1.87.2 / Python 3.13
 
 - 설치 및 실행 : Repository를 clone하고, 패키지 설치, 환경변수 설정, 실행하는 과정에 대한 내용들을 코드로 적어준다.
+
+- 버전 및 이슈관리 : Github / Github Issues\
+
+- 협업 툴 : Github, Notion
 
 - 사용 방법 <p>$\it{\rm{\color{#5ad7b7}지혜님..부탁드립니다..!}}$</p>
 <br>
