@@ -4,7 +4,7 @@ class Policy_feed():
         self.__category=category
         self.__thumbnail_url= thumbnail_url
         self.__fid = fid
-        self.__link = f'https://youth.seoul.go.kr/infoData/sprtInfo/view.do?sprtInfoId={self.__fid}'
+        self.__link = f'https://youth.seoul.go.kr/infoData/sprtInfo/view.do?sprtInfoId={fid}'
 
     @property
     def _title(self):

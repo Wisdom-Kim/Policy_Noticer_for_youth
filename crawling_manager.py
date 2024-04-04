@@ -8,9 +8,9 @@ class Crawling_Manager:
     def __init__(self):
         self.driver = webdriver.Chrome()
         self.URL = 'https://youth.seoul.go.kr/infoData/sprtInfo/list.do?key=2309130006'
+        self.base_URL='https://youth.seoul.go.kr'
 
-    #########################전처리#################################
-    #database.txt에 있는 fid를 바탕으로 리스트 생성 후 반환
+    ####################크롤링 데이터 전처리##########################
     def pretreatment_db(self,file) ->list:
         try:
             with open(file,'r') as f:
@@ -32,7 +32,7 @@ class Crawling_Manager:
         # 크롤링한 피드 컴포넌트의 속성 중 피드의 id가 속한 부분을 반환
         return item.find_element(By.CLASS_NAME,"item-overlay").get_attribute("onclick")
 
-    #########################정책생성#############################
+    ####################크롤링 데이터 정책생성#############################
     def create_policy(self,feed) -> object:
         #크롤링된 컴포넌트 내 정보를 기반으로 객체 생성후 반환
         content = feed.find_element(By.CLASS_NAME,"content")
@@ -40,39 +40,64 @@ class Crawling_Manager:
         if(state!='마감'):
             category= feed.find_element(By.CLASS_NAME,"cate").text
             title= content.find_element(By.CLASS_NAME,"name").text
-            src = feed.find_element(By.TAG_NAME,"img").get_attribute("src")
+            src = self.base_URL+feed.find_element(By.TAG_NAME,"img").get_attribute("src")
             fid = self.remove_bracket(self.get_fid_component(feed))
         return Policy_feed(title,category,src,fid)
 
     def write_db(self,file_name,id) -> None:
         #database.txt에 파일 내용저장
-        #딕셔너리에 존재하지 않는 id만 db에 추가하므로, write_db 이후에 save_policies를 호출할 것
+        #딕셔너리에 존재하지 않는 id만 db에 추가하므로, write_db 이후에 save_new_policy를 호출할 것
         with open(file_name,'a') as f: f.write(f'{id}\n')
 
     ##################################################################
 
     def filter_init(self, custom_filter) -> None:
-        #카테고리, 대상 기반 필터링
-        self.driver.find_element(By.XPATH,"/html/body/div[3]/div/div[1]/div/div[2]/form/div/div[2]/div[4]/ul/li[3]/a").click()
-        time.sleep(1)
-        #self.driver.execute_script("arguments[0].click();", target_btn)
-        if custom_filter.cate!=[]:
-            #선택 요소가 있다면
-            for idx in custom_filter.cate:
-                self.driver.find_element(By.XPATH,f'/html/body/div[3]/div/div[1]/div/div[2]/form/div/div[2]/div[2]/ul[1]/li[{idx}]/a').click()
-                time.sleep(1)    
+        #필터 객체에 따라 카테고리 필터 요소 클릭
+        #지역에 따라 조종
+        if(custom_filter.area):
+            
+            self.driver.find_element(By.XPATH,"/html/body/div[3]/div/div[1]/div/div[2]/form/div/div[2]/div[4]/ul/li[1]/a").click()
+            #self.driver.execute_script("arguments[0].click();",area_filter_btn)
+
+            for area in custom_filter.area:
+                find_idx=custom_filter.area_list.find(area) #입력받은 지역이 실제 area_list에서는 몇 번 인덱스에 존재하는지 추출
+                xpath =f'/html/body/div[3]/div/div[1]/div/div[2]/form/div/div[2]/div[4]/ul/li[1]/div/ul/li[{find_idx+1}]/input'
+                self.driver.find_element(By.XPATH,xpath).click()
+                #self.driver.execute_script("arguments[0].click();",area_btn)
+
+            if(custom_filter.ward):
+                for ward in custom_filter.ward:
+                    find_idx=custom_filter.area_list.find(area) #입력받은 자치구들이 실제 ward_list에서는 몇 번 인덱스에 존재하는지 추출
+                    self.driver.find_element(By.XPATH,"/html/body/div[3]/div/div[1]/div/div[2]/form/div/div[2]/div[4]/ul/li[2]/a").click()
+                #self.driver.execute_script("arguments[0].click();",ward_filter_btn)
+        
+        if(custom_filter.target):
+            target_filter_btn= self.driver.find_element(By.XPATH,"/html/body/div[3]/div/div[1]/div/div[2]/form/div/div[2]/div[4]/ul/li[1]/a")
+            self.driver.execute_script("arguments[0].click();",target_filter_btn)
+
+
                 
-        if custom_filter._target!=[]:
-            for idx in custom_filter._target:
-                self.driver.find_element(By.XPATH,f'/html/body/div[3]/div/div[1]/div/div[2]/form/div/div[2]/div[2]/ul[1]/li[{idx}]/a').click()
-                time.sleep(1) 
-                #self.driver.execute_script("arguments[0].click();", target_btn)
+
+        # self.driver.find_element(By.XPATH,"/html/body/div[3]/div/div[1]/div/div[2]/form/div/div[2]/div[4]/ul/li[3]/a").click()
+        # time.sleep(1)
+        # self.driver.execute_script("arguments[0].click();", target_btn)
+        # if custom_filter.cate!=[]:
+        #     #선택 요소가 있다면
+        #     for idx in custom_filter.cate:
+        #         self.driver.find_element(By.XPATH,f'/html/body/div[3]/div/div[1]/div/div[2]/form/div/div[2]/div[2]/ul[1]/li[{idx}]/a').click()
+        #         time.sleep(1)    
+                
+        # if custom_filter._target!=[]:
+        #     for idx in custom_filter._target:
+        #         self.driver.find_element(By.XPATH,f'/html/body/div[3]/div/div[1]/div/div[2]/form/div/div[2]/div[2]/ul[1]/li[{idx}]/a').click()
+        #         time.sleep(1) 
+        #         self.driver.execute_script("arguments[0].click();", target_btn)
 
         
     def crawling_init(self,custom_filter) -> None:
         #filter 객체를 받아 filter init 실행 후, 조건에 맞도록 크롤링할 것
         self.driver.get(self.URL)
-        #self.filter_init(custom_filter)
+        self.filter_init(custom_filter)
         #필터별로 선택
         
         #모집 중 필터

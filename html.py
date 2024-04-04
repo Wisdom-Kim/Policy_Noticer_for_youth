@@ -162,19 +162,13 @@ span.MsoHyperlinkFollowed {
                     <td class="es-m-p20b" align="center" valign="top" style="padding:0;Margin:0;width:270px">
                     <table cellpadding="0" cellspacing="0" width="100%" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:separate;border-spacing:0px;border-left:1px solid #efefef;border-right:1px solid #efefef;border-top:1px solid #efefef;border-bottom:1px solid #efefef;border-radius:5px" role="presentation">
                         <tr>
-                        <td align="center" style="padding:0;Margin:0;font-size:0px"><img class="adapt-img" src="f{src}" alt="" style="display:block;font-size:14px;border:0;outline:none;text-decoration:none" height="200"></td>
+                        <td align="center" style="padding:0;Margin:0;font-size:0px"><img class="adapt-img" src="{src}" alt="" style="display:block;font-size:14px;border:0;outline:none;text-decoration:none" height="200"></td>
                         </tr>
                         <tr>
                         <td align="center" class="es-m-txt-c" style="padding:0;Margin:0;padding-bottom:5px;padding-right:10px;padding-left:10px"><h3 style="Margin:0;font-family:arial, 'helvetica neue', helvetica, sans-serif;mso-line-height-rule:exactly;letter-spacing:0;font-size:20px;font-style:normal;font-weight:bold;line-height:24px;color:#333333">{title}</h3></td>
                         </tr>
                         <tr>
-                        <td align="center" style="Margin:0;padding-top:5px;padding-bottom:5px;padding-right:10px;padding-left:10px"><p style="Margin:0;mso-line-height-rule:exactly;font-family:arial, 'helvetica neue', helvetica, sans-serif;line-height:18px;letter-spacing:0;color:#333333;font-size:12px">Love baseball and other outdoor games? Then you might want to have this cotton cap.</p></td>
-                        </tr>
-                        <tr>
-                        <td align="center" style="Margin:0;padding-top:5px;padding-bottom:5px;padding-right:10px;padding-left:10px"><p style="Margin:0;mso-line-height-rule:exactly;font-family:arial, 'helvetica neue', helvetica, sans-serif;line-height:24px;letter-spacing:0;color:#5c68e2;font-size:16px"><strong>SAVE $20</strong></p></td>
-                        </tr>
-                        <tr>
-                        <td align="center" style="padding:0;Margin:0;padding-bottom:20px"><span class="es-button-border" style="border-style:solid;border-color:#5c68e2;background:#ffffff;border-width:2px;display:inline-block;border-radius:5px;width:auto"><a href="{link}" class="es-button es-button-6545" target="_blank" style="mso-style-priority:100 !important;text-decoration:none !important;mso-line-height-rule:exactly;color:#5c68e2;font-size:20px;padding:10px 30px 10px 30px;display:inline-block;background:#ffffff;border-radius:5px;font-family:arial, 'helvetica neue', helvetica, sans-serif;font-weight:normal;font-style:normal;line-height:24px;width:auto;text-align:center;letter-spacing:0;mso-padding-alt:0;mso-border-alt:10px solid #5C68E2;border-color:#ffffff">자세히보기</a></span></td>
+                        <td align="center" style="padding:0;Margin:0;padding-bottom:20px"><span class="es-button-border" style="border-style:solid;border-color:#3AB91B;background:#ffffff;border-width:2px;display:inline-block;border-radius:5px;width:auto"><a href="{link}" class="es-button es-button-6545" target="_blank" style="mso-style-priority:100 !important;text-decoration:none !important;mso-line-height-rule:exactly;color:#5c68e2;font-size:20px;padding:10px 30px 10px 30px;display:inline-block;background:#ffffff;border-radius:5px;font-family:arial, 'helvetica neue', helvetica, sans-serif;font-weight:normal;font-style:normal;line-height:24px;width:auto;text-align:center;letter-spacing:0;mso-padding-alt:0;mso-border-alt:10px solid #267613;border-color:#ffffff">자세히보기</a></span></td>
                         </tr>
                     </table></td>
                     </tr>
@@ -203,9 +197,9 @@ span.MsoHyperlinkFollowed {
                     {self.insert_table(list(data_list[i].values())[0])}
                     """
             try:
-                self._html+={self.insert_table(list(data_list[i+1].values())[0])}
-            except Exception:
-                print("범위오류네요!")
+                self._html+=self.insert_table(list(data_list[i+1].values())[0])
+            except Exception as e:
+                print(e)
             finally:
                 self._html+="""
                             </td>
