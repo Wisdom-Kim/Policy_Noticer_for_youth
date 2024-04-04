@@ -30,8 +30,7 @@ class UI:
             target = input("해당하는 번호를 알려주세요! >>> ")
 
         target=int(target)-1
-        target_list.append(target)
-        self.my_filter._target=target_list
+        self.my_filter._target=target
             
     @decorate
     def input_email(self) -> str:
@@ -44,17 +43,16 @@ class UI:
     
     @decorate
     def input_area(self) ->list:
-        #direction은 지역 인덱스
-        #wards.index(user_input)은 자치구 인덱스
+        #area_idx 지역 인덱스
+        #areas.index(user_input)은 자치구 인덱스
         while True:  # 무한 반복
             area_idx=0
             user_input = input("자치구 이름을 입력하세요: ")
             for areas in self.my_filter.ward_list.values(): #([종로구,중구...].[도봉구,성동구....],....)
                 area_idx+=1
                 if user_input in areas:
-                    #print(f"{user_input}은(는) {area_idx}에 위치하며, 리스트 내 인덱스는 {areas.index(user_input)}입니다.")
                     self.my_filter._area=area_idx
-                    
+                    self.my_filter._ward =areas.index(user_input) #자치구 인덱스
                     return [area_idx,areas.index(user_input)]
             print(f"잘못된 입력입니다. 서울에 있는 자치구를 입력해주세요!")
 
