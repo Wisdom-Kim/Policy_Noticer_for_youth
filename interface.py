@@ -46,10 +46,10 @@ class UI:
         self.root.mainloop()
         
     def apply_filter(self) ->object:
-        #filter 객체 반환
+        #TODO 파일 생성 후watchdog를 통해 크롤링 시작하게 만들기
         
+        #filter 객체 반환
         #선택한 요소의 인덱스를 필터 객체에 저장
-        #print("야야야야야ㅑ야ㅑ~!~!~!")
         self.my_filter.cate = [idx for idx, var in enumerate(self.category_vars) if var.get()]
         self.my_filter.target = [idx for idx, var in enumerate(self.target_vars) if var.get()]
         #self.root.destroy()

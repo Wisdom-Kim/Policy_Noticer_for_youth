@@ -10,6 +10,7 @@ class Crawling_Manager:
         self.URL = 'https://youth.seoul.go.kr/infoData/sprtInfo/list.do?key=2309130006'
 
     #########################전처리#################################
+    #database.txt에 있는 fid를 바탕으로 리스트 생성 후 반환
     def pretreatment_db(self,file) ->list:
         try:
             with open(file,'r') as f:

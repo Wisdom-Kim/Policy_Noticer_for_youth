@@ -52,8 +52,7 @@ class Server:
         return smtp
                 
 #메세지 텍스트 작성
-
-#딕셔너리는{id:객체(title, category가 프로퍼티)}의 집합
+#매개로 받는 딕셔너리는{id:객체(title, category가 프로퍼티)}의 집합
 def dict_to_content(dictionary) ->str:
     content = ""
     for new_policy in dictionary.values():
