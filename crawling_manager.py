@@ -10,13 +10,16 @@ class Crawling_Manager:
         self.driver = webdriver.Chrome()
         self.URL = 'https://youth.seoul.go.kr/infoData/sprtInfo/list.do?key=2309130006'
         self.base_URL='https://youth.seoul.go.kr'
+        self.policy_list=[]
 
     ####################크롤링 데이터 전처리##########################
     def pretreatment_db(self,file) ->list:
         try:
             with open(file,'r') as f:
                 return [fid.strip('\n') for fid in f.readlines()]
+            #중복되는 fid는 제외하기 위해, database.txt에 적혀진 fid의 리스트를 반환
         except Exception:
+            #읽을 파일이 없는 경우
             print("처음 실행해보셨군요!")
             with open(file,'w') as f:
                 pass # 파일 만들기만 하기
@@ -79,7 +82,6 @@ class Crawling_Manager:
         
         if(custom_filter._target):
             target_filter_btn= self.driver.find_element(By.XPATH,f"/html/body/div[3]/div/div[1]/div/div[2]/form/div/div[2]/div[4]/ul/li[3]/a")#대상 버튼 클릭
-            # target_filter_btn.click()
             self.driver.execute_script("arguments[0].click();",target_filter_btn)
             time.sleep(1)
 
@@ -134,7 +136,8 @@ class Crawling_Manager:
             pass
 
     def save_new_policy(self,database) -> dict:
-
+        #database는 fid가 담긴 리스트임!
+        
         policy_dict ={} # id : 객체
         cur_idx =1
         last_index = self.get_last_page() # 5페이지 이하일 경우 5로 임시 설정
@@ -149,8 +152,7 @@ class Crawling_Manager:
                             #database에 db가 없다면 객체 생성 후 txt에 fid기입
                             policy = self.create_policy(feed)
                             self.write_db('database.txt', policy._fid)
-                            
-                            policy_dict[policy._fid]=policy
+                            self.policy_list.append({policy._fid : policy})
                             
                     except NoSuchElementException:
                         #상태 태그가 존재하지 않음
