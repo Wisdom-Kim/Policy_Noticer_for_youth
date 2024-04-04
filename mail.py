@@ -4,7 +4,7 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 
 import smtplib
-from py_html import Html
+from py_html import HTML
 
 load_dotenv()
 
@@ -51,7 +51,7 @@ class Server:
                 
 #메세지 텍스트 작성
 #매개로 받는 딕셔너리는{id:객체(title, category가 프로퍼티)}의 집합
-def dict_to_content(dictionary) ->str:
+def dict_to_html(dictionary) ->str:
     content = ""
     for new_policy in dictionary.values():
         content += "="*30 + "\n"
@@ -62,7 +62,7 @@ def dict_to_content(dictionary) ->str:
     return content        
         
 def write_msg(server,policy_dict,email)-> object: # content 반환
-    text= dict_to_content(policy_dict)
+    text= dict_to_html(policy_dict)
     msg =  MIMEMultipart('alternative')
     msg['Subject']='짜잔!🥰 요청하신 정책 정보입니다!'
     msg.attach(MIMEText(text, 'plain', _charset='UTF-8'))
