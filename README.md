@@ -1,6 +1,6 @@
 <div align="center">
  
- # SIAT 청년정책 알라미 (SIAT_python_crawling)
+ # 청년정책 알라미 (Policy_Noticer_for_youth)
 <br>
 
 **전체 개발 기간**<br>
