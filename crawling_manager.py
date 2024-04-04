@@ -47,7 +47,7 @@ class Crawling_Manager:
         if(state!='마감'):
             category= feed.find_element(By.CLASS_NAME,"cate").text
             title= content.find_element(By.CLASS_NAME,"name").text
-            src = self.base_URL+feed.find_element(By.TAG_NAME,"img").get_attribute("src")
+            src = feed.find_element(By.TAG_NAME,"img").get_attribute("src")
             fid = self.remove_bracket(self.get_fid_component(feed))
         return Policy_feed(title,category,src,fid)
 
@@ -156,7 +156,7 @@ class Crawling_Manager:
                     except NoSuchElementException:
                         #상태 태그가 존재하지 않음
                         print("상태 정보 없음")     
-                    cur_idx = self.next_page(cur_idx) #다음 페이지로 넘기기
+                cur_idx = self.next_page(cur_idx) #다음 페이지로 넘기기
         except Exception:
             print("끝까지 탐색했어요!")
         finally:
