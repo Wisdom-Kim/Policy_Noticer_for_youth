@@ -1,6 +1,3 @@
-from selenium import webdriver
-from crawling_manager import *
-###############################
 import os
 from dotenv import load_dotenv
 from email.mime.multipart import MIMEMultipart
@@ -8,14 +5,16 @@ from email.mime.text import MIMEText
 
 import smtplib
 
+from policy import Policy_feed
+
 load_dotenv()
 
 class Server:
     def __init__(self):
         self.SMTP_SERVER='smtp.gmail.com'
         self.SMTP_PORT = 587
-        self.__SMTP_USER = os.environ.get('SMTP_USER')
-        self.__PASSWORD = os.environ.get('SMTP_PASSWORD')
+        self.__SMTP_USER = os.getenv('SMTP_USER')
+        self.__PASSWORD = os.getenv('SMTP_PASSWORD')
      
     @property
     def _SEND_USER(self):
