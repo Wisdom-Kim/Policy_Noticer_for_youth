@@ -58,7 +58,7 @@ class UI:
 
 # 인스턴스 생성 및 메소드 호출
     
-app=UI()
-app.print_menu()
-app.input_target()
-app.input_area()
+# app=UI()
+# app.print_menu()
+# app.input_target()
+# app.input_area()

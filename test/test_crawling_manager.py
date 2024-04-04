@@ -102,10 +102,15 @@ class Crawling_Manager:
         self.driver.execute_script("arguments[0].click();", search_btn)
         time.sleep(1)
 
-    def get_last_page(self):
-        last_index = self.driver.find_element(By.XPATH,'/html/body/div[3]/div/div[1]/div/div[2]/form/div/div[4]/div[1]/div[2]/a[9]').get_attribute("onclick")
-        last_index = int(self.remove_bracket(last_index))
-        return last_index
+    def get_last_page(self)->int:
+        #5개 이하일 때는 아래의 xpath 요소가 나타나지 않음
+        try:
+            xpath='/html/body/div[3]/div/div[1]/div/div[2]/form/div/div[4]/div[1]/div[2]/a[9]'
+            last_index = self.driver.find_element(By.XPATH,xpath).get_attribute("onclick")
+            last_index = int(self.remove_bracket(last_index))
+            return last_index
+        except Exception:
+            return 5
         
         #last index만큼 '>'를 누르면서 DB에 저장
         
@@ -118,8 +123,8 @@ class Crawling_Manager:
             
             self.driver.execute_script("arguments[0].click();", next_btn)
             return int(cur_page)+1
-        except Exception as e:
-            print(e)
+        except Exception:
+            print("끝까지 탐색했어요!")
 
     def save_new_policy(self,database) -> dict:
 
@@ -150,9 +155,12 @@ class Crawling_Manager:
         return policy_dict
 
 
-cm = Crawling_Manager()
-cm.driver.get(cm.URL)
+# cm = Crawling_Manager()
+# cm.driver.get(cm.URL)
 
-ft = Filter(ward=1,area=2,target=1)
-cm.filter_init(ft)
-time.sleep(10)
+# ft = Filter(ward=1,area=2,target=1)
+# cm.crawling_init(ft)
+# cm.create_policy()
+# print(cm.get_last_page())
+
+# time.sleep(10)

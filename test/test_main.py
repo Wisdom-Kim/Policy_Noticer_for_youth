@@ -1,10 +1,13 @@
-from old_interface import *
-from mail import *
-from crawling_manager import *
-from custom_filter import *
+from test_interface import *
+from test_mail import *
+from test_crawling_manager import *
+from test_filter import *
 
 # cm = Crawling_Manager()
-# app.menu()
+app = UI()
+app.print_menu()
+app.input_target()
+app.input_area()
 #메뉴 입력받기
 cm = Crawling_Manager()
 cm.crawling_init(app.my_filter)
