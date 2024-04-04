@@ -18,7 +18,10 @@ class Crawling_Manager:
             with open(file,'r') as f:
                 return [fid.strip('\n') for fid in f.readlines()]
         except Exception:
-            print("파일이 없는데요??")
+            print("처음 실행해보셨군요!")
+            with open(file,'w') as f:
+                pass # 파일 만들기만 하기
+
 
     def remove_bracket(self,component) ->str:
         #괄호 안 요소를 반환
@@ -112,6 +115,7 @@ class Crawling_Manager:
         except Exception:
             return 5
         
+        
         #last index만큼 '>'를 누르면서 DB에 저장
         
     def next_page(self, cur_page) -> int:
@@ -124,35 +128,35 @@ class Crawling_Manager:
             self.driver.execute_script("arguments[0].click();", next_btn)
             return int(cur_page)+1
         except Exception:
-            print("끝까지 탐색했어요!")
+            pass
 
     def save_new_policy(self,database) -> dict:
 
         policy_dict ={} # id : 객체
         cur_idx =1
-        
         last_index = self.get_last_page()
-        while(last_index > cur_idx):
-            #마지막 인덱스로 갈 때까지 저장하면서 페이지 넘기기
-            
-            feeds = self.driver.find_elements(By.CLASS_NAME,"feed-item")
-            for feed in feeds:
-                try:
-                    fid = self.remove_bracket(self.get_fid_component(feed))
-                    if(fid not in database):
-                        #database에 db가 없다면 객체 생성 후 txt에 fid기입
-                        policy = self.create_policy(feed)
-                        self.write_db('database.txt', policy._fid)
-                        
-                        policy_dict[policy._fid]=policy
-                        
-                except NoSuchElementException:
-                    #상태 태그가 존재하지 않음
-                    print("상태 정보 없음")
-                    
-            cur_idx = self.next_page(cur_idx)
-
-        return policy_dict
+        try:
+            while(last_index > cur_idx):
+                #마지막 인덱스로 갈 때까지 저장하면서 페이지 넘기기
+                feeds = self.driver.find_elements(By.CLASS_NAME,"feed-item")
+                for feed in feeds:
+                    try:
+                        fid = self.remove_bracket(self.get_fid_component(feed))
+                        if(fid not in database):
+                            #database에 db가 없다면 객체 생성 후 txt에 fid기입
+                            policy = self.create_policy(feed)
+                            self.write_db('database.txt', policy._fid)
+                            
+                            policy_dict[policy._fid]=policy
+                            
+                    except NoSuchElementException:
+                        #상태 태그가 존재하지 않음
+                        print("상태 정보 없음")     
+                    cur_idx = self.next_page(cur_idx) #다음 페이지로 넘기기
+        except Exception:
+            print("끝까지 탐색했어요!")
+        finally:
+            return policy_dict
 
 
 # cm = Crawling_Manager()

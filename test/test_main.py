@@ -5,12 +5,13 @@ from test_filter import *
 
 # cm = Crawling_Manager()
 app = UI()
-app.print_menu()
-app.input_target()
-app.input_area()
+# app.print_menu()
+# app.input_target()
+# app.input_area()
 #메뉴 입력받기
+ft = Filter(ward=1,area=2,target=1)
 cm = Crawling_Manager()
-cm.crawling_init(app.my_filter)
+cm.crawling_init(ft)
 database = cm.pretreatment_db('database.txt')
 policy_dict = cm.save_new_policy(database)
 email = app.input_email()
