@@ -123,13 +123,16 @@ span.MsoHyperlinkFollowed {
                   <td align="center" valign="top" style="padding:0;Margin:0;width:560px">
                    <table cellpadding="0" cellspacing="0" width="100%" role="presentation" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px">
                      <tr>
-                      <td align="center" style="padding:0;Margin:0;padding-top:10px;padding-bottom:10px;font-size:0px"><img class="adapt-img" src="https://eiciojs.stripocdn.email/content/guids/CABINET_887f48b6a2f22ad4fb67bc2a58c0956b/images/36981617967116311.png" alt="" style="display:block;font-size:14px;border:0;outline:none;text-decoration:none" width="300"></td>
+                      <td align="center" style="padding:0;Margin:0;padding-top:10px;padding-bottom:10px;font-size:0px"><img class="adapt-img" src="https://assets-global.website-files.com/6364b6fd26e298b11fb9391f/6364b6fd26e2982a41b93c71_63184c5867aa7b2b84a1e2ca_DrawKit0035_Startups_%2526_Tech_Thumbnail.png" alt="" style="display:block;font-size:14px;border:0;outline:none;text-decoration:none" width="300"></td>
                      </tr>
                      <tr>
                       <td align="center" class="es-m-txt-c" style="padding:0;Margin:0;padding-bottom:10px;padding-top:20px"><h1 style="Margin:0;font-family:arial, 'helvetica neue', helvetica, sans-serif;mso-line-height-rule:exactly;letter-spacing:0;font-size:46px;font-style:normal;font-weight:bold;line-height:46px;color:#333333">띵동!</h1></td>
                      </tr>
                      <tr>
-                      <td align="center" style="padding:0;Margin:0;padding-top:5px;padding-bottom:5px"><p style="Margin:0;mso-line-height-rule:exactly;font-family:arial, 'helvetica neue', helvetica, sans-serif;line-height:21px;letter-spacing:0;color:#333333;font-size:14px">요청하신 정책이 도착했어요!&nbsp;</td>
+                      <td align="center" style="padding:0;Margin:0;padding-top:5px;padding-bottom:5px"><p style="Margin:0;mso-line-height-rule:exactly;font-family:arial, 'helvetica neue', helvetica, sans-serif;line-height:21px;letter-spacing:0;color:#333333;font-size:14px">나를 위한 정책이 뭐가 있을까? 직접 찾아보기 귀찮으셨죠?&nbsp;</td>
+                     </tr>
+                     <tr>
+                      <td align="center" style="padding:0;Margin:0;padding-top:5px;padding-bottom:5px"><p style="Margin:0;mso-line-height-rule:exactly;font-family:arial, 'helvetica neue', helvetica, sans-serif;line-height:21px;letter-spacing:0;color:#333333;font-size:14px">저희가 알려드릴게요! 새로 나온 정책들을 확인해보세요!&nbsp;</td>
                      </tr>
                    </table></td>
                  </tr>
@@ -187,7 +190,7 @@ span.MsoHyperlinkFollowed {
                         <td align="center" valign="top" style="padding:0;Margin:0;width:560px">
                         <table cellpadding="0" cellspacing="0" width="100%" role="presentation" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px">
                             <tr>
-                            <td align="center" class="es-m-txt-c" style="Margin:0;padding-right:20px;padding-left:20px;padding-bottom:5px;padding-top:15px"><h2 style="Margin:0;font-family:arial, 'helvetica neue', helvetica, sans-serif;mso-line-height-rule:exactly;letter-spacing:0;font-size:26px;font-style:normal;font-weight:bold;line-height:31px;color:#333333">이번 주 청년 지원 정책입니다!</h2></td>
+                            <td align="center" class="es-m-txt-c" style="Margin:0;padding-right:20px;padding-left:20px;padding-bottom:5px;padding-top:15px"><h2 style="Margin:0;font-family:arial, 'helvetica neue', helvetica, sans-serif;mso-line-height-rule:exactly;letter-spacing:0;font-size:26px;font-style:normal;font-weight:bold;line-height:31px;color:#333333">💚새로 나온 청년 지원 정책 LIST💚</h2></td>
                             </tr>
                         </table></td>
                         </tr>
