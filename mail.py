@@ -14,8 +14,8 @@ class Server:
     def __init__(self):
         self.SMTP_SERVER='smtp.gmail.com'
         self.SMTP_PORT = 587
-        self.__SMTP_USER = 'policymail2@gmail.com'
-        self.__PASSWORD = 'usaq molu nvbg beov'
+        self.__SMTP_USER = os.environ.get('SMTP_USER')
+        self.__PASSWORD = os.environ.get('SMTP_PASSWORD')
      
     @property
     def _SEND_USER(self):
@@ -72,4 +72,3 @@ def write_msg(server,policy_dict,email)-> object: # content 반환
     msg['From'] = server._SMTP_USER
     msg['To'] = email
     return msg
-
