@@ -53,6 +53,8 @@ class UI:
                 area_idx+=1
                 if user_input in areas:
                     #print(f"{user_input}은(는) {area_idx}에 위치하며, 리스트 내 인덱스는 {areas.index(user_input)}입니다.")
+                    self.my_filter._area=area_idx
+                    
                     return [area_idx,areas.index(user_input)]
             print(f"잘못된 입력입니다. 서울에 있는 자치구를 입력해주세요!")
 

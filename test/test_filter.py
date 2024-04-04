@@ -3,10 +3,11 @@
 
 '''
 class Filter:
-    def __init__(self,cate=[],target=[],ward=[]):
+    def __init__(self,cate=[],target=[],ward=[],area=[]):
         self.__cate = cate
         self.__target = target
-        self.__ward = ward
+        self.__area = area #지역 (동북, 서북...)
+        self.__ward = ward #자치구
         self.cate_list=['전체','일자리','진로','창업','주거','금융','교육','마음건강','신체건강','생활지원','문화/예술','대외활동','공간','사회참여','커뮤니티']
         self.target_list= ['제한없음','대학생','구직','재직','이직준비','시험준비','프리랜서','기타']
         #편의상 lsit라고 변수 명 지정
@@ -22,6 +23,16 @@ class Filter:
         return self.__ward
     
     @_ward.setter
+    def _ward(self,value):
+        self.__ward=value
+
+    @property
+    def _area(self):
+        return self.__area
+    
+    @_area.setter
+    def _area(self,value):
+        self.__area=value
 
     @property
     def _cate(self):
