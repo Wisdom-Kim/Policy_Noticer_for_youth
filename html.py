@@ -180,7 +180,6 @@ span.MsoHyperlinkFollowed {
                     </tr>
                 </table>
                 """
-        print(temp)
         return temp
     def insert_content(self,data_list):
         for i in range(0,len(data_list),2):

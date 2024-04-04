@@ -1,18 +1,4 @@
-class HTML:
-    def __init__(self):
-        self.__html=''
-        self.init_code()
 
-    @property
-    def _html(self):
-        return self.__html
-    
-    @_html.setter
-    def _html(self, value):
-        self.__html = value
-
-    def init_code(self):
-        self.__html ="""
         <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html dir="ltr" xmlns="http://www.w3.org/1999/xhtml" xmlns:o="urn:schemas-microsoft-com:office:office" lang="en">
  <head>
@@ -145,43 +131,7 @@ span.MsoHyperlinkFollowed {
           <td align="center" style="padding:0;Margin:0">
            <table bgcolor="#ffffff" class="es-content-body" align="center" cellpadding="0" cellspacing="0" role="none" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px;background-color:#FFFFFF;width:600px">
 
-        """
-    
-    def insert_table(self,policy):
-        # policy 객체를 받아와 데이터 파싱 후 테이블 html 코드 반환
-        #html을 담을 변수
-        temp=''
         
-        src = policy._thumbnail_url # data.src
-        title = policy._title
-        link = policy._link
-
-        temp+=f"""
-                <table cellpadding="0" cellspacing="0" align="left" class="es-left" role="none" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px;float:left">
-                    <tr>
-                    <td class="es-m-p20b" align="center" valign="top" style="padding:0;Margin:0;width:270px">
-                    <table cellpadding="0" cellspacing="0" width="100%" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:separate;border-spacing:0px;border-left:1px solid #efefef;border-right:1px solid #efefef;border-top:1px solid #efefef;border-bottom:1px solid #efefef;border-radius:5px" role="presentation">
-                        <tr>
-                        <td align="center" style="padding:0;Margin:0;font-size:0px"><img class="adapt-img" src="{src}" alt="" style="display:block;font-size:14px;border:0;outline:none;text-decoration:none" height="200"></td>
-                        </tr>
-                        <tr>
-                        <td align="center" class="es-m-txt-c" style="padding:0;Margin:0;padding-bottom:5px;padding-right:10px;padding-left:10px"><h3 style="Margin:0;font-family:arial, 'helvetica neue', helvetica, sans-serif;mso-line-height-rule:exactly;letter-spacing:0;font-size:20px;font-style:normal;font-weight:bold;line-height:24px;color:#333333">{title}</h3></td>
-                        </tr>
-                        <tr>
-                        <td align="center" style="Margin:0;padding-top:5px;padding-bottom:5px;padding-right:10px;padding-left:10px"><p style="Margin:0;mso-line-height-rule:exactly;font-family:arial, 'helvetica neue', helvetica, sans-serif;line-height:24px;letter-spacing:0;color:#5c68e2;font-size:16px"><strong>SAVE $20</strong></p></td>
-                        </tr>
-                        <tr>
-                        <td align="center" style="padding:0;Margin:0;padding-bottom:20px"><span class="es-button-border" style="border-style:solid;border-color:#5c68e2;background:#ffffff;border-width:2px;display:inline-block;border-radius:5px;width:auto"><a href="{link}" class="es-button es-button-6545" target="_blank" style="mso-style-priority:100 !important;text-decoration:none !important;mso-line-height-rule:exactly;color:#5c68e2;font-size:20px;padding:10px 30px 10px 30px;display:inline-block;background:#ffffff;border-radius:5px;font-family:arial, 'helvetica neue', helvetica, sans-serif;font-weight:normal;font-style:normal;line-height:24px;width:auto;text-align:center;letter-spacing:0;mso-padding-alt:0;mso-border-alt:10px solid #5C68E2;border-color:#ffffff">자세히보기</a></span></td>
-                        </tr>
-                    </table></td>
-                    </tr>
-                </table>
-                """
-        return temp
-    def insert_content(self,data_list):
-        for i in range(0,len(data_list),2):
-            ##2개씩 출력
-            self._html+=f"""
                     <tr>
                     <td align="left" style="Margin:0;padding-right:20px;padding-bottom:10px;padding-left:20px;padding-top:20px">
                     <table cellpadding="0" cellspacing="0" width="100%" role="none" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px">
@@ -197,20 +147,31 @@ span.MsoHyperlinkFollowed {
                     </tr>
                     <tr>
                     <td align="left" style="padding:0;Margin:0;padding-right:20px;padding-left:20px"><!--[if mso]><table style="width:560px" cellpadding="0" cellspacing="0"><tr><td style="width:270px" valign="top"><![endif]-->
-                    {self.insert_table(list(data_list[i].values())[0])}
-                    """
-            try:
-                self._html+={self.insert_table(list(data_list[i+1].values())[0])}
-            except Exception:
-                print("범위오류네요!")
-            finally:
-                self._html+="""
+                    
+                <table cellpadding="0" cellspacing="0" align="left" class="es-left" role="none" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px;float:left">
+                    <tr>
+                    <td class="es-m-p20b" align="center" valign="top" style="padding:0;Margin:0;width:270px">
+                    <table cellpadding="0" cellspacing="0" width="100%" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:separate;border-spacing:0px;border-left:1px solid #efefef;border-right:1px solid #efefef;border-top:1px solid #efefef;border-bottom:1px solid #efefef;border-radius:5px" role="presentation">
+                        <tr>
+                        <td align="center" style="padding:0;Margin:0;font-size:0px"><img class="adapt-img" src="https://youth.seoul.go.kr/atch/getImg.do?atchFileSn=1735987&ordr=1" alt="" style="display:block;font-size:14px;border:0;outline:none;text-decoration:none" height="200"></td>
+                        </tr>
+                        <tr>
+                        <td align="center" class="es-m-txt-c" style="padding:0;Margin:0;padding-bottom:5px;padding-right:10px;padding-left:10px"><h3 style="Margin:0;font-family:arial, 'helvetica neue', helvetica, sans-serif;mso-line-height-rule:exactly;letter-spacing:0;font-size:20px;font-style:normal;font-weight:bold;line-height:24px;color:#333333">테스트지롱!</h3></td>
+                        </tr>
+                        <tr>
+                        <td align="center" style="Margin:0;padding-top:5px;padding-bottom:5px;padding-right:10px;padding-left:10px"><p style="Margin:0;mso-line-height-rule:exactly;font-family:arial, 'helvetica neue', helvetica, sans-serif;line-height:24px;letter-spacing:0;color:#5c68e2;font-size:16px"><strong>SAVE $20</strong></p></td>
+                        </tr>
+                        <tr>
+                        <td align="center" style="padding:0;Margin:0;padding-bottom:20px"><span class="es-button-border" style="border-style:solid;border-color:#5c68e2;background:#ffffff;border-width:2px;display:inline-block;border-radius:5px;width:auto"><a href="https://youth.seoul.go.kr/infoData/sprtInfo/view.do?sprtInfoId=" class="es-button es-button-6545" target="_blank" style="mso-style-priority:100 !important;text-decoration:none !important;mso-line-height-rule:exactly;color:#5c68e2;font-size:20px;padding:10px 30px 10px 30px;display:inline-block;background:#ffffff;border-radius:5px;font-family:arial, 'helvetica neue', helvetica, sans-serif;font-weight:normal;font-style:normal;line-height:24px;width:auto;text-align:center;letter-spacing:0;mso-padding-alt:0;mso-border-alt:10px solid #5C68E2;border-color:#ffffff">자세히보기</a></span></td>
+                        </tr>
+                    </table></td>
+                    </tr>
+                </table>
+                
+                    
                             </td>
                         </tr>
-                        """
-
-    def finish_code(self):
-        self.__html += """
+                        
                                 </table></td>
                         </tr>
                     </table>
@@ -220,15 +181,4 @@ span.MsoHyperlinkFollowed {
                 </div>
                 </body>
                 </html>
-                """
-        
-'''
-실사용은 어떻게?
-
-source = HTML() #init_code 자동 생성
-source.insert_content(policy_list)
-source.finish_code()
-
-msg_content = source._html
-하고 mail.py에 msg_content 삽입
-'''
+                
