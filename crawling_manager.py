@@ -4,6 +4,7 @@ from selenium.webdriver.common.by import By
 from selenium.common.exceptions import NoSuchElementException
 import time
 
+
 class Crawling_Manager:
     def __init__(self):
         self.driver = webdriver.Chrome()
@@ -53,45 +54,34 @@ class Crawling_Manager:
 
     def filter_init(self, custom_filter) -> None:
         #필터 객체에 따라 카테고리 필터 요소 클릭
+
         #지역에 따라 조종
-        if(custom_filter.area):
+        if(custom_filter._area):
             
-            self.driver.find_element(By.XPATH,"/html/body/div[3]/div/div[1]/div/div[2]/form/div/div[2]/div[4]/ul/li[1]/a").click()
-            #self.driver.execute_script("arguments[0].click();",area_filter_btn)
+            area_filter_btn=self.driver.find_element(By.XPATH,"/html/body/div[3]/div/div[1]/div/div[2]/form/div/div[2]/div[4]/ul/li[1]/a")
+            #area_filter_btn.click()
+            self.driver.execute_script("arguments[0].click();",area_filter_btn)
+            time.sleep(1)
 
-            for area in custom_filter.area:
-                find_idx=custom_filter.area_list.find(area) #입력받은 지역이 실제 area_list에서는 몇 번 인덱스에 존재하는지 추출
-                xpath =f'/html/body/div[3]/div/div[1]/div/div[2]/form/div/div[2]/div[4]/ul/li[1]/div/ul/li[{find_idx+1}]/input'
+            xpath =f'/html/body/div[3]/div/div[1]/div/div[2]/form/div/div[2]/div[4]/ul/li[1]/div/ul/li[{custom_filter._area}]/label' # 라벨
+            self.driver.find_element(By.XPATH,xpath).click()
+
+            if(custom_filter._ward):
+                
+                ward_filter_btn=self.driver.find_element(By.XPATH,"/html/body/div[3]/div/div[1]/div/div[2]/form/div/div[2]/div[4]/ul/li[2]/a")
+                # ward_filter_btn.click()
+                self.driver.execute_script("arguments[0].click();",ward_filter_btn)
+                xpath=f'/html/body/div[3]/div/div[1]/div/div[2]/form/div/div[2]/div[4]/ul/li[2]/div/ul/li[{custom_filter._ward}]/label' # 라벨
                 self.driver.find_element(By.XPATH,xpath).click()
-                #self.driver.execute_script("arguments[0].click();",area_btn)
-
-            if(custom_filter.ward):
-                for ward in custom_filter.ward:
-                    find_idx=custom_filter.area_list.find(area) #입력받은 자치구들이 실제 ward_list에서는 몇 번 인덱스에 존재하는지 추출
-                    self.driver.find_element(By.XPATH,"/html/body/div[3]/div/div[1]/div/div[2]/form/div/div[2]/div[4]/ul/li[2]/a").click()
-                #self.driver.execute_script("arguments[0].click();",ward_filter_btn)
         
-        if(custom_filter.target):
-            target_filter_btn= self.driver.find_element(By.XPATH,"/html/body/div[3]/div/div[1]/div/div[2]/form/div/div[2]/div[4]/ul/li[1]/a")
+        if(custom_filter._target):
+            target_filter_btn= self.driver.find_element(By.XPATH,f"/html/body/div[3]/div/div[1]/div/div[2]/form/div/div[2]/div[4]/ul/li[3]/a")#대상 버튼 클릭
+            # target_filter_btn.click()
             self.driver.execute_script("arguments[0].click();",target_filter_btn)
+            time.sleep(1)
 
-
-                
-
-        # self.driver.find_element(By.XPATH,"/html/body/div[3]/div/div[1]/div/div[2]/form/div/div[2]/div[4]/ul/li[3]/a").click()
-        # time.sleep(1)
-        # self.driver.execute_script("arguments[0].click();", target_btn)
-        # if custom_filter.cate!=[]:
-        #     #선택 요소가 있다면
-        #     for idx in custom_filter.cate:
-        #         self.driver.find_element(By.XPATH,f'/html/body/div[3]/div/div[1]/div/div[2]/form/div/div[2]/div[2]/ul[1]/li[{idx}]/a').click()
-        #         time.sleep(1)    
-                
-        # if custom_filter._target!=[]:
-        #     for idx in custom_filter._target:
-        #         self.driver.find_element(By.XPATH,f'/html/body/div[3]/div/div[1]/div/div[2]/form/div/div[2]/div[2]/ul[1]/li[{idx}]/a').click()
-        #         time.sleep(1) 
-        #         self.driver.execute_script("arguments[0].click();", target_btn)
+            xpath=f'/html/body/div[3]/div/div[1]/div/div[2]/form/div/div[2]/div[4]/ul/li[3]/div/ul/li[{custom_filter._target}]/label'#라벨
+            self.driver.find_element(By.XPATH,xpath).click()
 
         
     def crawling_init(self,custom_filter) -> None:
@@ -157,4 +147,3 @@ class Crawling_Manager:
             cur_idx = self.next_page(cur_idx)
 
         return policy_dict
-
