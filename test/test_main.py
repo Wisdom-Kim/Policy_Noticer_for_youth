@@ -2,6 +2,7 @@ from test_interface import *
 from test_mail import *
 from test_crawling_manager import *
 from test_filter import *
+import time
 
 # cm = Crawling_Manager()
 app = UI()
@@ -9,7 +10,7 @@ app = UI()
 # app.input_target()
 # app.input_area()
 #메뉴 입력받기
-ft = Filter(ward=1,area=2,target=1)
+ft = Filter(area=1,ward=4,target=1)
 cm = Crawling_Manager()
 cm.crawling_init(ft)
 database = cm.pretreatment_db('database.txt')
