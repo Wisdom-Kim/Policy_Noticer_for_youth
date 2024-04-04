@@ -54,7 +54,7 @@ class Crawling_Manager:
         #카테고리, 대상 기반 필터링
         self.driver.find_element(By.XPATH,"/html/body/div[3]/div/div[1]/div/div[2]/form/div/div[2]/div[4]/ul/li[3]/a").click()
         time.sleep(1)
-        self.driver.execute_script("arguments[0].click();", target_btn)
+        #self.driver.execute_script("arguments[0].click();", target_btn)
         if custom_filter.cate!=[]:
             #선택 요소가 있다면
             for idx in custom_filter.cate:
@@ -65,13 +65,13 @@ class Crawling_Manager:
             for idx in custom_filter._target:
                 self.driver.find_element(By.XPATH,f'/html/body/div[3]/div/div[1]/div/div[2]/form/div/div[2]/div[2]/ul[1]/li[{idx}]/a').click()
                 time.sleep(1) 
-                self.driver.execute_script("arguments[0].click();", target_btn)
+                #self.driver.execute_script("arguments[0].click();", target_btn)
 
         
     def crawling_init(self,custom_filter) -> None:
         #filter 객체를 받아 filter init 실행 후, 조건에 맞도록 크롤링할 것
         self.driver.get(self.URL)
-        self.filter_init(custom_filter)
+        #self.filter_init(custom_filter)
         #필터별로 선택
         
         #모집 중 필터

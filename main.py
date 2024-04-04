@@ -5,7 +5,7 @@ from custom_filter import *
 
 # cm = Crawling_Manager()
 app = UI()
-app.menu()
+# app.menu()
 #메뉴 입력받기
 app.input_target()
 cm = Crawling_Manager()

@@ -22,7 +22,7 @@ class UI:
         
         tk.Label(self.root, text="카테고리").grid(row=0, column=0, padx=10, pady=5, sticky="w")
         
-        for i, category in enumerate(self.my_filter.cate_list()):
+        for i, category in enumerate(self.my_filter.cate_list):
             var = tk.BooleanVar()
             cb = tk.Checkbutton(self.root, text=category, variable=var)
             cb.grid(row=1 + i//5, column=i%5, padx=10, pady=5, sticky="w")
@@ -31,7 +31,7 @@ class UI:
         # 타겟 라벨 및 체크박스
         tk.Label(self.root, text="대상").grid(row=5, column=0, padx=10, pady=5, sticky="w")
         
-        for i, target in enumerate(self.my_filter.target_list()):
+        for i, target in enumerate(self.my_filter.target_list):
             var = tk.BooleanVar()
             cb = tk.Checkbutton(self.root, text=target, variable=var)
             cb.grid(row=6+i//5, column=i%5, padx=5, pady=10, sticky="w")
