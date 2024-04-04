@@ -70,13 +70,14 @@ class Crawling_Manager:
             xpath =f'/html/body/div[3]/div/div[1]/div/div[2]/form/div/div[2]/div[4]/ul/li[1]/div/ul/li[{custom_filter._area}]/label' # 라벨
             self.driver.find_element(By.XPATH,xpath).click()
 
-            if(custom_filter._ward):
+            # 자치구까지 필터 설정 시 사이트 자체에서 필터링 오류가 생김!!!(본인이 해결할 수 없는, 사이트 자체의 에러임)
+            # if(custom_filter._ward):
                 
-                ward_filter_btn=self.driver.find_element(By.XPATH,"/html/body/div[3]/div/div[1]/div/div[2]/form/div/div[2]/div[4]/ul/li[2]/a")
-                # ward_filter_btn.click()
-                self.driver.execute_script("arguments[0].click();",ward_filter_btn)
-                xpath=f'/html/body/div[3]/div/div[1]/div/div[2]/form/div/div[2]/div[4]/ul/li[2]/div/ul/li[{custom_filter._ward}]/label' # 라벨
-                self.driver.find_element(By.XPATH,xpath).click()
+            #     ward_filter_btn=self.driver.find_element(By.XPATH,"/html/body/div[3]/div/div[1]/div/div[2]/form/div/div[2]/div[4]/ul/li[2]/a")
+            #     # ward_filter_btn.click()
+            #     self.driver.execute_script("arguments[0].click();",ward_filter_btn)
+            #     xpath=f'/html/body/div[3]/div/div[1]/div/div[2]/form/div/div[2]/div[4]/ul/li[2]/div/ul/li[{custom_filter._ward}]/label' # 라벨
+            #     self.driver.find_element(By.XPATH,xpath).click()
         
         if(custom_filter._target):
             target_filter_btn= self.driver.find_element(By.XPATH,f"/html/body/div[3]/div/div[1]/div/div[2]/form/div/div[2]/div[4]/ul/li[3]/a")#대상 버튼 클릭
@@ -156,8 +157,8 @@ class Crawling_Manager:
                         #상태 태그가 존재하지 않음
                         print("상태 정보 없음")     
                     cur_idx = self.next_page(cur_idx) #다음 페이지로 넘기기
-        except Exception:
-            print("끝까지 탐색했어요!")
+        except Exception as e:
+            print(e)
         finally:
             return policy_dict
 

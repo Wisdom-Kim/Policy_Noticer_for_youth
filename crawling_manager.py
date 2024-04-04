@@ -69,13 +69,13 @@ class Crawling_Manager:
             xpath =f'/html/body/div[3]/div/div[1]/div/div[2]/form/div/div[2]/div[4]/ul/li[1]/div/ul/li[{custom_filter._area}]/label' # 라벨
             self.driver.find_element(By.XPATH,xpath).click()
 
-            if(custom_filter._ward):
+            # if(custom_filter._ward):
                 
-                ward_filter_btn=self.driver.find_element(By.XPATH,"/html/body/div[3]/div/div[1]/div/div[2]/form/div/div[2]/div[4]/ul/li[2]/a")
-                # ward_filter_btn.click()
-                self.driver.execute_script("arguments[0].click();",ward_filter_btn)
-                xpath=f'/html/body/div[3]/div/div[1]/div/div[2]/form/div/div[2]/div[4]/ul/li[2]/div/ul/li[{custom_filter._ward}]/label' # 라벨
-                self.driver.find_element(By.XPATH,xpath).click()
+            #     ward_filter_btn=self.driver.find_element(By.XPATH,"/html/body/div[3]/div/div[1]/div/div[2]/form/div/div[2]/div[4]/ul/li[2]/a")
+            #     # ward_filter_btn.click()
+            #     self.driver.execute_script("arguments[0].click();",ward_filter_btn)
+            #     xpath=f'/html/body/div[3]/div/div[1]/div/div[2]/form/div/div[2]/div[4]/ul/li[2]/div/ul/li[{custom_filter._ward}]/label' # 라벨
+            #     self.driver.find_element(By.XPATH,xpath).click()
         
         if(custom_filter._target):
             target_filter_btn= self.driver.find_element(By.XPATH,f"/html/body/div[3]/div/div[1]/div/div[2]/form/div/div[2]/div[4]/ul/li[3]/a")#대상 버튼 클릭
@@ -100,9 +100,13 @@ class Crawling_Manager:
         self.driver.find_element(By.XPATH,'/html/body/div[3]/div/div[1]/div/div[2]/form/div/div[2]/div[4]/ul/li[5]/div/ul/li[2]').click()
         #검색버튼 클릭
         search_btn = self.driver.find_element(By.XPATH,'/html/body/div[3]/div/div[1]/div/div[2]/form/div/div[2]/div[3]/button')
-
         self.driver.execute_script("arguments[0].click();", search_btn)
         time.sleep(1)
+        
+        #왜인진 모르겠는데 사이트 자체에서 2번 클릭 되어야 제대로 필터링이 되어져서 나옴ㅠㅠ
+        search_btn = self.driver.find_element(By.XPATH,'/html/body/div[3]/div/div[1]/div/div[2]/form/div/div[2]/div[3]/button')
+        self.driver.execute_script("arguments[0].click();", search_btn)
+
 
     def get_last_page(self)->int:
         #5개 이하일 때는 아래의 xpath 요소가 나타나지 않음
@@ -133,7 +137,7 @@ class Crawling_Manager:
 
         policy_dict ={} # id : 객체
         cur_idx =1
-        last_index = self.get_last_page()
+        last_index = self.get_last_page() # 5페이지 이하일 경우 5로 임시 설정
         try:
             while(last_index > cur_idx):
                 #마지막 인덱스로 갈 때까지 저장하면서 페이지 넘기기
