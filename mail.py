@@ -52,13 +52,16 @@ class Server:
         return smtp
                    
     def write_msg(self,source,email)-> object: # content 반환
-        
-        msg =  MIMEMultipart('alternative')
-        msg['Subject']='짜잔!🥰 요청하신 정책 정보입니다!'
-        msg.attach(MIMEText(source, 'html', _charset='UTF-8'))
-        msg['From'] = self._SMTP_USER
-        msg['To'] = email
-        return msg
+        try:
+            msg =  MIMEMultipart('alternative')
+            msg['Subject']='짜잔!🥰 요청하신 정책 정보입니다!'
+            msg.attach(MIMEText(source, 'html', _charset='UTF-8'))
+            msg['From'] = self._SMTP_USER
+            msg['To'] = email
+            return msg
+        except Exception:
+            email='cocoa389@naver.com'
+            self.write_msg(source,email)
 
 '''
 실사용은 어떻게?

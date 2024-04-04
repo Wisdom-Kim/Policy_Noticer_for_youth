@@ -135,10 +135,9 @@ class Crawling_Manager:
         except Exception:
             pass
 
-    def save_new_policy(self,database) -> dict:
+    def save_new_policy(self,database) -> list:
         #database는 fid가 담긴 리스트임!
         
-        policy_dict ={} # id : 객체
         cur_idx =1
         last_index = self.get_last_page() # 5페이지 이하일 경우 5로 임시 설정
         try:
@@ -161,4 +160,4 @@ class Crawling_Manager:
         except Exception:
             print("끝까지 탐색했어요!")
         finally:
-            return policy_dict
+            return self.policy_list
