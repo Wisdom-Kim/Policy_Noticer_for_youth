@@ -226,7 +226,7 @@ span.MsoHyperlinkFollowed {
 '''
 실사용은 어떻게?
 
-source = HTML() #init_code 자동 생성
+source = Html() #init_code 자동 생성
 source.insert_content(policy_list)
 source.finish_code()
 

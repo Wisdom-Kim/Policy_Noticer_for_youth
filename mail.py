@@ -4,8 +4,7 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 
 import smtplib
-
-from policy import Policy_feed
+from py_html import Html
 
 load_dotenv()
 
