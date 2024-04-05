@@ -148,7 +148,19 @@ span.MsoHyperlinkFollowed {
          <tr>
           <td align="center" style="padding:0;Margin:0">
            <table bgcolor="#ffffff" class="es-content-body" align="center" cellpadding="0" cellspacing="0" role="none" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px;background-color:#FFFFFF;width:600px">
-
+          <tr>
+                    <td align="left" style="Margin:0;padding-right:20px;padding-bottom:10px;padding-left:20px;padding-top:20px">
+                    <table cellpadding="0" cellspacing="0" width="100%" role="none" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px">
+                        <tr>
+                        <td align="center" valign="top" style="padding:0;Margin:0;width:560px">
+                        <table cellpadding="0" cellspacing="0" width="100%" role="presentation" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px">
+                            <tr>
+                            <td align="center" class="es-m-txt-c" style="Margin:0;padding-right:20px;padding-left:20px;padding-bottom:5px;padding-top:15px"><h2 style="Margin:0;font-family:arial, 'helvetica neue', helvetica, sans-serif;mso-line-height-rule:exactly;letter-spacing:0;font-size:26px;font-style:normal;font-weight:bold;line-height:31px;color:#333333">💚새로 나온 청년 지원 정책 LIST💚</h2></td>
+                            </tr>
+                        </table></td>
+                        </tr>
+                    </table></td>
+                    </tr>
         """
     
     def insert_table(self,policy):
@@ -183,19 +195,7 @@ span.MsoHyperlinkFollowed {
         for i in range(0,len(data_list),2):
             ##2개씩 출력
             self._html+=f"""
-                    <tr>
-                    <td align="left" style="Margin:0;padding-right:20px;padding-bottom:10px;padding-left:20px;padding-top:20px">
-                    <table cellpadding="0" cellspacing="0" width="100%" role="none" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px">
-                        <tr>
-                        <td align="center" valign="top" style="padding:0;Margin:0;width:560px">
-                        <table cellpadding="0" cellspacing="0" width="100%" role="presentation" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px">
-                            <tr>
-                            <td align="center" class="es-m-txt-c" style="Margin:0;padding-right:20px;padding-left:20px;padding-bottom:5px;padding-top:15px"><h2 style="Margin:0;font-family:arial, 'helvetica neue', helvetica, sans-serif;mso-line-height-rule:exactly;letter-spacing:0;font-size:26px;font-style:normal;font-weight:bold;line-height:31px;color:#333333">💚새로 나온 청년 지원 정책 LIST💚</h2></td>
-                            </tr>
-                        </table></td>
-                        </tr>
-                    </table></td>
-                    </tr>
+                    
                     <tr>
                     <td align="left" style="padding:0;Margin:0;padding-right:20px;padding-left:20px"><!--[if mso]><table style="width:560px" cellpadding="0" cellspacing="0"><tr><td style="width:270px" valign="top"><![endif]-->
                     {self.insert_table(list(data_list[i].values())[0])}
