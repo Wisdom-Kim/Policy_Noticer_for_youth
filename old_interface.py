@@ -37,7 +37,7 @@ class UI:
         user_mail =''
         reg = '^[a-zA-Z0-9+-_.]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$'
         while(re.compile(reg).match(user_mail) is None):
-            user_mail = input("소식을 받을 메일 주소를 입력해주세요!: ")        
+            user_mail = input('소식을 받을 메일 주소를 입력해주세요!: ')        
         return user_mail
     
     @decorate
